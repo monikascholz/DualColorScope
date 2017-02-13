@@ -1,5 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 
+
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
+
+
 #define PIN 6 // this is the LED signal pin
 int camPin = 9; // camera trigger on Pin 
 
