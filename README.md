@@ -7,6 +7,8 @@ All light passes through the sample and into the filter. The wavelength of 620nm
 ### Green illumination
 The light passes through the sample and excites ed fluorescent molecules. The excitation wavelength is blocked by the filter, such that only emission (red) can continue to the camera.
 
+## Setup
+A basic microscope is modified with custom 3d-printed or lasercut fittings for the camera, LEDs and filter, a microcontroller and a camera. The red light source is placed below the stage to illuminate the sample from below. The green light source is placed orthogonal to the sample-camera axis. Since the longpass-filter is not perfect (0.01% transmission in the forbidden region), we need to arrange the excitation light at an angle to the camera. Otherwise, the small amount of tranmitted light creates a 'shadow' birghtfield image in the fluorescence channel. The camera is triggered in sync with the color-switches in the light source, such that each frame is illuminated by exactly one color.
 
 ## Parts
 
@@ -21,3 +23,7 @@ The light passes through the sample and excites ed fluorescent molecules. The ex
 
 -> about $600 for a 60Hz dual color microscope.
 
+## Issues and comments
+1. At fast framerates the exposure time is limited by the frame rate. This leads to very low signals in the fluorescence channel. There are two solutions: A more expensive, dedicated camera for fluorescence applications with a high quantum efficiency at 600+nm, or to change the recording pattern from alternating frames to a series of fast brightfield frames followed by a longer-exposure fluorescence frame. The feasibility of this approach depends on the desired application.
+
+2. LED PWM cycle: The Adafruit Neopixel LEDs have an internal clock that runs at 2ms. If the light-switch data comes in during the 'off' cycle of the LED, there will be a delay in the swicth by (at most) 2ms. Considering that the exposure time at 60Hz is 8 ms (60Hz in each channel = 16 ms for two frames), this presents a significant change in toltal illumination. The problem can be solved by using faster-clocking LEDs, or it can be improved in the analysis by performing histogram equalization on the images.
